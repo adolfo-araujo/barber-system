@@ -1,0 +1,17 @@
+{
+  "name": "Barber System",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/barber-system",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Site", "onAutoForward": "openPreview" }
+  },
+  "postCreateCommand": "npm install && npx prisma migrate deploy && npm run db:seed",
+  "postAttachCommand": "echo '\\nTudo pronto! Rode: npm run dev\\nLogin de teste: demo@barber.com / 123456\\n'",
+  "customizations": {
+    "vscode": {
+      "extensions": ["Prisma.prisma", "bradlc.vscode-tailwindcss", "dbaeumer.vscode-eslint"]
+    }
+  }
+}
