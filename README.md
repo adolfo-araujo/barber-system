@@ -89,12 +89,12 @@ bash scripts/smoke-test.sh
 
 O script testa a API de ponta a ponta: listagem e busca, horários, cadastro, login, criação de reserva, bloqueio de horário duplicado e de horário no passado, listagem e cancelamento. O mesmo teste roda no GitHub Actions a cada push (`.github/workflows/ci.yml`).
 
-## Deploy (Vercel + banco gerenciado)
+## Deploy (Vercel + Neon)
 
-1. Crie um banco PostgreSQL (Neon, Supabase, Railway, Vercel Postgres etc.) e copie a URL de conexão.
-2. Importe este repositório na Vercel.
-3. Configure as variáveis `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL` (URL do site) e, se quiser, `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
-4. Rode uma vez, apontando para o banco de produção: `npx prisma migrate deploy && npm run db:seed`.
+1. Importe este repositório na Vercel (Add New → Project).
+2. Em **Storage → Create Database → Neon**, crie o banco (região São Paulo) e conecte ao projeto. A Vercel preenche `DATABASE_URL` e `DATABASE_URL_UNPOOLED` sozinha.
+3. Em **Settings → Environment Variables**, adicione `NEXTAUTH_SECRET` (gere com `openssl rand -base64 32`) e, se quiser, `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
+4. Faça o deploy. O script `vercel-build` aplica as migrations e popula o banco automaticamente a cada publicação (o seed não duplica dados).
 
 ## Scripts
 
